@@ -1,0 +1,164 @@
+import 'package:flutter/material.dart';
+ 
+void main() {
+  runApp(const MyApp());
+}
+ 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+ 
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
+    );
+  }
+}
+ 
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+ 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+ 
+class _LoginPageState extends State<LoginPage> {
+  String usuario = '';
+  String senha = '';
+  String mensagemErro = '';
+ 
+  void _entrar() {
+    if (usuario == 'admin' && senha == '1234') {
+      setState(() {
+        mensagemErro = '';
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login efetuado com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      setState(() {
+        mensagemErro = 'Usuário ou senha incorretos.';
+      });
+    }
+  }
+ 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF1E7D1E),
+      body: Center(
+        child: Container(
+          width: 300,
+          padding: const EdgeInsets.all(28),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+ 
+              const Text(
+                'User:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 6),
+              TextField(
+                onChanged: (valor) {
+                  setState(() {
+                    usuario = valor;
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Digite o seu usuário',
+                  filled: true,
+                  fillColor: const Color(0xFFE0E0E0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+ 
+              const Text(
+                'Senha:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 6),
+              TextField(
+                obscureText: true,
+                onChanged: (valor) {
+                  setState(() {
+                    senha = valor;
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Digite a sua senha',
+                  filled: true,
+                  fillColor: const Color(0xFFE0E0E0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+ 
+              Text(
+                mensagemErro,
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+              const SizedBox(height: 14),
+ 
+              Center(
+                child: ElevatedButton(
+                  onPressed: _entrar,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4CAF50),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 48,
+                      vertical: 14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  child: const Text('Entrar'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
